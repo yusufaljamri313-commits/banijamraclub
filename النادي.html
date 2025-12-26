@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نادي بني جمرة الثقافي والرياضي</title>
+    <style>
+        /* تعريف الألوان المستوحاة من الشعار */
+        :root { 
+            --primary: #1e7d32; /* الأخضر */
+            --secondary: #000000; /* الأسود */
+            --accent: #ffffff; /* الأبيض */
+            --light-gray: #f8f9fa;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecf1 100%); 
+            color: #111; 
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* أنيميشن الظهور */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        header { 
+            background: linear-gradient(135deg, var(--secondary) 0%, #1a1a1a 100%);
+            color: #fff; 
+            padding: 3rem 1rem; 
+            text-align: center; 
+            border-bottom: 5px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #90ee90;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        .logo-container img { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 50%; 
+            border: 5px solid var(--primary);
+            object-fit: cover;
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(30, 125, 50, 0.4);
+            transition: var(--transition);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(30, 125, 50, 0.6);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        nav { 
+            background: linear-gradient(90deg, var(--primary) 0%, #2e9f50 100%);
+            padding: 1rem; 
+            display: flex; 
+            justify-content: center; 
+            gap: 1.5rem; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(30, 125, 50, 0.3);
+            flex-wrap: wrap;
+        }
+
+        nav a { 
+            color: #fff; 
+            text-decoration: none; 
+            font-weight: bold; 
+            cursor: pointer; 
+            padding: 8px 16px;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            border-radius: 25px;
+            position: relative;
+        }
+
+        nav a:hover { 
+            background: rgba(255,255,255,0.25); 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        section { 
+            margin-bottom: 5rem; 
+            scroll-margin-top: 100px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h2 { 
+            color: var(--primary); 
+            font-size: 2rem; 
+            margin-bottom: 1.5rem; 
+            border-right: 6px solid var(--primary); 
+            padding-right: 15px;
+            text-shadow: 1px 1px 2px rgba(30, 125, 50, 0.1);
+        }
+
+        h2::before {
+            content: "▸ ";
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+        .card { 
+            background: linear-gradient(135deg, var(--light-gray) 0%, #fff 100%);
+            padding: 2rem; 
+            border-radius: 12px; 
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 12px 25px rgba(30, 125, 50, 0.15);
+            border-left: 4px solid #66bb6a;
+        }
+
+        .card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* معرض الصور مع التكبير */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .gallery-item { 
+            overflow: hidden; 
+            border-radius: 12px; 
+            background: #fff; 
+            text-align: center; 
+            border: 1px solid #eee;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: var(--transition);
+        }
+        .gallery-item:hover {
+            box-shadow: 0 8px 20px rgba(30, 125, 50, 0.2);
+            transform: translateY(-5px);
+        }
+        .gallery-img { 
+            width: 100%; 
+            height: 200px; 
+            background-size: cover; 
+            background-position: center; 
+            transition: transform 0.6s ease; 
+            cursor: pointer; 
+        }
+        .gallery-item:hover .gallery-img { transform: scale(1.15); }
+        .gallery-item h4 {
+            color: var(--primary);
+            padding: 1rem;
+            font-size: 0.95rem;
+        }
+        .insta-link {
+            display: inline-block; 
+            margin-top: 1rem; 
+            color: var(--primary);
+            text-decoration: none; 
+            font-weight: bold; 
+            border: 2px solid var(--primary);
+            padding: 10px 30px; 
+            border-radius: 25px; 
+            transition: var(--transition);
+            background: transparent;
+        }
+        .insta-link:hover { 
+            background: var(--primary); 
+            color: white;
+            box-shadow: 0 6px 15px rgba(30, 125, 50, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* مجلس الإدارة المحدث */
+        .admin-board { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 1.5rem; 
+        }
+        .member { 
+            background: linear-gradient(135deg, var(--light-gray) 0%, #fff 100%);
+            padding: 1.5rem; 
+            text-align: center; 
+            border-radius: 12px; 
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-top: 3px solid transparent;
+        }
+        .member:hover { 
+            background: linear-gradient(135deg, #fff 0%, #f0f7f0 100%);
+            box-shadow: 0 8px 25px rgba(30, 125, 50, 0.2); 
+            transform: translateY(-8px);
+            border-top: 3px solid var(--primary);
+        }
+        .member-avatar { 
+            width: 100px; 
+            height: 100px; 
+            background: linear-gradient(135deg, var(--primary) 0%, #66bb6a 100%);
+            border-radius: 50%; 
+            margin: 0 auto 1rem; 
+            border: 4px solid var(--primary);
+            object-fit: cover;
+            box-shadow: 0 6px 15px rgba(30, 125, 50, 0.3);
+        }
+        .member h4 { 
+            color: var(--primary); 
+            margin-bottom: 5px;
+            font-size: 1.05rem;
+        }
+        .member p { 
+            font-size: 0.85rem; 
+            color: #666; 
+            font-weight: 500;
+        }
+
+        /* قسم الأنشطة الرياضية */
+        .sports-section h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            border-right: 4px solid var(--primary);
+            padding-right: 10px;
+        }
+
+        .sports-section h3:first-child {
+            margin-top: 0;
+        }
+
+        .sport-card {
+            background: linear-gradient(135deg, #f0f7f0 0%, #fff 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-right: 4px solid var(--primary);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(30, 125, 50, 0.1);
+        }
+
+        .sport-card:hover {
+            box-shadow: 0 8px 20px rgba(30, 125, 50, 0.15);
+            transform: translateX(-5px);
+        }
+
+        .sport-card h4 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .sport-card p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        footer { 
+            background: linear-gradient(135deg, var(--secondary) 0%, #1a1a1a 100%);
+            color: #fff; 
+            text-align: center; 
+            padding: 3rem 1rem;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+        }
+
+        footer p {
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) { 
+            h2 { font-size: 1.6rem; }
+            header h1 { font-size: 1.8rem; }
+            .admin-board { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+            .member-avatar { width: 80px; height: 80px; }
+            section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="download.png" alt="شعار النادي">
+        </div>
+        <h1 style="margin-top: 1rem;">نادي بني جمرة</h1>
+        <p>الثقافي والرياضي</p>
+    </header>
+
+    <nav>
+        <a onclick="scrollToSection('about')">عن النادي</a>
+        <a onclick="scrollToSection('board')">مجلس الإدارة</a>
+        <a onclick="scrollToSection('sports')">الأنشطة الرياضية</a>
+        <a onclick="scrollToSection('gallery')">معرض الصور</a>
+        <a onclick="scrollToSection('contact')">تواصل معنا</a>
+    </nav>
+
+    <div class="container">
+        
+        <section id="about" class="reveal">
+            <h2>نبذة عن النادي</h2>
+            <p>تأسس نادي بني جمرة الثقافي والرياضي عام 1958م، وهو ركن أساسي في الحراك الرياضي والثقافي بمملكة البحرين. يلتزم النادي بدعم طاقات الشباب وتوفير بيئة خصبة للإبداع الرياضي والاجتماعي.</p>
+        </section>
+
+        <section id="board" class="reveal">
+            <h2>مجلس الإدارة (2025 - 2029)</h2>
+            <div class="admin-board">
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('رئيس مجلس الادارة.png'); background-size: cover; background-position: center;"></div>
+                    <h4>صالح طارش</h4>
+                    <p>رئيس مجلس الإدارة</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('نائب رئيس مجلس الادارة.png'); background-size: cover; background-position: center;"></div>
+                    <h4>عبدالواحد طارش</h4>
+                    <p>نائب رئيس مجلس الإدارة</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('الامين المالي.png'); background-size: cover; background-position: center;"></div>
+                    <h4>إبراهيم رجب</h4>
+                    <p>أمين المال</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('امين السر.png'); background-size: cover; background-position: center;"></div>
+                    <h4>مهدي طارش</h4>
+                    <p>أمين السر</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('رئيس لجنة الانشطة المجتمعية.png'); background-size: cover; background-position: center;"></div>
+                    <h4>سيد مرتضى شبر</h4>
+                    <p>رئيس لجنة الأنشطة المجتمعية</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('رئيس اللجنة الرياضية.png'); background-size: cover; background-position: center;"></div>
+                    <h4>زيد محمد</h4>
+                    <p>رئيس اللجنة الرياضية</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('رئيس لجنة المشتريات والدعم.png'); background-size: cover; background-position: center;"></div>
+                    <h4>أحمد الغسرة</h4>
+                    <p>رئيس لجنة المشتريات والدعم</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('رئيس لجنة كرة القدم.png'); background-size: cover; background-position: center;"></div>
+                    <h4>علي الكليتي</h4>
+                    <p>رئيس لجنة كرة القدم</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('رئيس لجنة الاستثمار.png'); background-size: cover; background-position: center;"></div>
+                    <h4>حسين جعفر</h4>
+                    <p>رئيس لجنة الاستثمار</p>
+                </div>
+                <div class="member">
+                    <div class="member-avatar" style="background-image: url('رئيس النادي.png'); background-size: cover; background-position: center;"></div>
+                    <h4>أحمد عمران</h4>
+                    <p>مدير النادي</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sports" class="reveal">
+            <h2>الأنشطة الرياضية</h2>
+            
+            <div class="sports-section">
+                <h3>النشاط الرياضي الرئيسي</h3>
+                
+                <div class="sport-card">
+                    <h4>كرة الطائرة</h4>
+                    <p>النادي يعتبر من الأندية المشاركة في دوري الدرجة الأولى للكرة الطائرة في البحرين، ويشارك بانتظام في مسابقات الموسم المحلي الذي تنظمه الاتحاد البحريني للكرة الطائرة (Bahrain Volleyball Association) ضمن دوري عيسى بن راشد للكرة الطائرة.</p>
+                </div>
+
+                <h3 style="margin-top: 2rem;">مشاركات وإنجازات قديمة</h3>
+                <div class="sport-card">
+                    <p>النادي من الأندية التي شاركت في مسابقات متعددة على مر السنوات (خصوصًا الكرة الطائرة) وحقق نتائج ومنافسات متنوعة ضد أندية مثل البسيتين والأهلي وغيرها في الدوري البحريني.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="reveal">
+            <h2>معرض الصور</h2>
+            <p>يمكنكم رؤية جميع الصور والفعاليات في حساب الإنستقرام الرسمي:</p>
+            <a href="https://www.instagram.com/MYS_CLUB_BANIJAMRA" target="_blank" class="insta-link">@MYS_CLUB_BANIJAMRA</a>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-24 195720.png');"></div>
+                    <h4>مجلس الإدارة الجديد</h4>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-25 061859.png');"></div>
+                    <h4>فعالية الفحص الطبي</h4>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-25 111920.png');"></div>
+                    <h4>فريق كرة الطائرة</h4>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-25 061923.png');"></div>
+                    <h4>مباراة رسمية</h4>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-25 111745.png');"></div>
+                    <h4>تهنئة طبي النادي</h4>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-25 111920.png');"></div>
+                    <h4>توقيع شراكة جديدة</h4>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-25 111946.png');"></div>
+                    <h4>اجتماع إداري</h4>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-25 112033.png');"></div>
+                    <h4>لاعب كرة الطائرة الجديد</h4>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('Screenshot 2025-12-25 112051.png');"></div>
+                    <h4>حسن ناصر - لاعب جديد</h4>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="reveal">
+            <h2>تواصل معنا</h2>
+            <div class="grid">
+                <div class="card">
+                    <h4>معلومات الاتصال</h4>
+                    <p>📞 17695769</p>
+                    <p>✉️ banjamrahclub@gmail.com</p>
+                    <p>📱 @MYS_CLUB_BANIJAMRA</p>
+                </div>
+                <div class="card">
+                    <form onsubmit="event.preventDefault(); alert('تم الإرسال بنجاح');">
+                        <input type="text" placeholder="الاسم" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;">
+                        <textarea placeholder="رسالتك" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;" rows="3"></textarea>
+                        <button style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; width:100%;">إرسال</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 نادي بني جمرة الثقافي والرياضي. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // أنيميشن التمرير - يختفي عند الخروج ويظهر عند الدخول
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
